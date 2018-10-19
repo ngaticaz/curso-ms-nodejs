@@ -1,0 +1,23 @@
+
+-> Diseño ms:
+	- ms-carsInventory
+		- getCars
+		- getCarsByMark
+		- insertCar
+		- updatePrice
+		- deleteCar
+
+-> DDBB
+>> use db_carsInventory
+
+>> db.cars.insert([{mark:"Toyota" , year:2014, price:10999990, visits:0, state:"disponible"},
+      		   {mark:"Toyota" , year:2010, price: 7999990, visits:0, state:"disponible"},
+		   {mark:"Toyota" , year:2015, price:11000000, visits:0, state:"vendido"   },
+		   {mark:"Hyundai", year:2013, price: 6000000, visits:0, state:"vendido"   },
+		   {mark:"Hyundai", year:2012, price:11999990, visits:0, state:"disponible"},
+		   {mark:"BMW"    , year:2014, price:10570990, visits:0, state:"disponible"},
+		   {mark:"BMW"    , year:2012, price:15000000, visits:0, state:"vendido"   },
+		   {mark:"BMW"    , year:2019, price:21999990, visits:0, state:"disponible"},
+		   {mark:"Audi"   , year:2018, price:32670990, visits:0, state:"disponible"}])
+
+-> 
