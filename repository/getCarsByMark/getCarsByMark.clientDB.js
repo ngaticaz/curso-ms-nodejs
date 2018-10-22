@@ -1,4 +1,4 @@
-//Model: Operation that obtains from DDBB all of c_users 
+//Model: Operation that obtains ..
 let message = require("../../config/messages.js").messages.messagesEnglish;
 
 function getCarsByMark(carMark_i){
@@ -17,4 +17,21 @@ function getCarsByMark(carMark_i){
 	return promise ;
 }
 
-module.exports.getCarsByMark=getCarsByMark; 
+function increaseVisits(idCar, visitsCar){
+	
+	let carsCollection   = require("../../util/collections.js")._cars_Collection;
+	let promise=new Promise( (resolve,reject)=>{
+		
+		carsCollection.update( {_id:idCar}, {$set:{visits:visitsCar+1}} , ( error )=> {
+			if (error) {	
+				reject(error);			
+				return ;
+			}
+			resolve(true);  
+		});
+	});
+	return promise ;
+}
+
+module.exports.getCarsByMark  = getCarsByMark; 
+module.exports.increaseVisits = increaseVisits; 
