@@ -12,12 +12,16 @@ async function getCarsByMark(req,res){
 			for(let i=0;i<cars.length;i++){
 				let idCar     = cars[i]._id; //console.log( idCar ); 
 				let visitsCar = cars[i].visits; //console.log( visitsCar ); 
+				let state = cars[i].state;
 
-				if ( (visitsCar%10)==0 ){//console.log("OK-OK");
+				let visits = await cars_Collection.increaseVisits( idCar, visitsCar );
+				console.log(visits);	
+
+				if ( (visitsCar%10)==0 && state=='disponible'){//console.log("OK-OK");
 					let mark  = cars[i].mark;
 					let year  = cars[i].year;
 					let price = cars[i].price - (cars[i].price)*0.1;
-					let state = cars[i].state;
+					
 
 					let carsJson={
 						  _id    : idCar,
@@ -31,9 +35,6 @@ async function getCarsByMark(req,res){
 					cars=carsJson;
 					break;
 				}
-
-				let visits = await cars_Collection.increaseVisits( idCar, visitsCar );
-				console.log(visits);	
 			}
 			
 			res.status(200).send({message:message["msgValidRequest"], info:cars});
