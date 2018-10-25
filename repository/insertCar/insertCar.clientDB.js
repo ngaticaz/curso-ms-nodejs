@@ -1,4 +1,4 @@
-//Model: Operation that obtains from DDBB all of c_users 
+//Model: Operation that obtains ...
 let message = require("../../config/messages.js").messages.messagesEnglish;
 
 function insertCar(mark_i, year_i, price_i){

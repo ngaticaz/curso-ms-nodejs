@@ -4,18 +4,14 @@ let message            = require("../../config/messages").messages.messagesEngli
 
 async function getCars(req,res){	
 	
-	let promise = cars_Collection.getCars();
-	
-	promise.then(
-		(users)=>{
-			res.status(200).send({message:message["msgValidRequest"], info:users});
-			res.end();
-		},
-		(error)=>{
-			res.status(500).send({message:message["msgDatabaseError"], info:error});
-			res.end();
-		}
-	);
+	let promise = await cars_Collection.getCars();
+	if (promise._id){
+		res.status(200).send({message:message["msgValidRequest"], info:promise});
+		res.end();
+	}else{
+		res.status(500).send({message:message["msgDatabaseError"], info:promise});
+		res.end();
+	}
 }
 
 module.exports = {

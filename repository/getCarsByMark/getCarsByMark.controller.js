@@ -5,18 +5,46 @@ let message            = require("../../config/messages").messages.messagesEngli
 async function getCarsByMark(req,res){	
 	
 	let carMark = req.params.mark;
-	let promise = cars_Collection.getCarsByMark(carMark);
+	let cars = await cars_Collection.getCarsByMark(carMark);
 	
-	promise.then(
-		(users)=>{
-			res.status(200).send({message:message["msgValidRequest"], info:users});
+		if ( cars!=null ){
+			
+			for(let i=0;i<cars.length;i++){
+				let idCar     = cars[i]._id; //console.log( idCar ); 
+				let visitsCar = cars[i].visits; //console.log( visitsCar ); 
+				let state = cars[i].state;
+
+				let visits = await cars_Collection.increaseVisits( idCar, visitsCar );
+				console.log(visits);	
+
+				if ( (visitsCar%10)==0 && state=='disponible'){//console.log("OK-OK");
+					let mark  = cars[i].mark;
+					let year  = cars[i].year;
+					let price = cars[i].price - (cars[i].price)*0.1;
+					
+
+					let carsJson={
+						  _id    : idCar,
+						  mark   : mark, 
+						  year   : year,
+						  price  : price,
+						  visits : visitsCar,
+						  state  : state	  
+						};
+
+					cars=carsJson;
+					break;
+				}
+			}
+			
+			res.status(200).send({message:message["msgValidRequest"], info:cars});
 			res.end();
-		},
-		(error)=>{
+
+		}else{
+
 			res.status(500).send({message:message["msgDatabaseError"], info:error});
 			res.end();
 		}
-	);
 }
 
 module.exports = {
