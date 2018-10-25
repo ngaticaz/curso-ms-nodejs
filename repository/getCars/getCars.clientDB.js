@@ -1,20 +1,29 @@
-//Model: Operation that obtains from DDBB all of c_users 
-let message = require("../../config/messages.js").messages.messagesEnglish;
+//Model: Operation that obtains ...
 
-function getCars(){
+let getCars = async()=>{
 
-	let carsCollection   =require("../../util/collections.js")._cars_Collection;
-	let promise=new Promise( (resolve,reject)=>{
-		
-		carsCollection.find({}, (error, cars)=>{
-			if (error) {	
-				reject(error);			
-				return ;
-			}
-			resolve(cars);  
-		});
+	let carsCollection = require("../../util/collections.js")._cars_Collection;
+ 
+	let requestDB = await carsCollection.find({}, (error, cars)=>{
+		if(error){
+			return error;
+		} return cars;
 	});
-	return promise ;
+ 
+	return requestDB;
 }
 
 module.exports.getCars = getCars; 
+
+/*
+let getCars = async()=>{
+
+	let carsCollection = require("../../util/collections.js")._cars_Collection;
+ 
+	let requestDB = await carsCollection.find({}, (error, cars)=>{
+ 
+	});
+ 
+	return requestDB;
+}
+*/
