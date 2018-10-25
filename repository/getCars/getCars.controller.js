@@ -5,7 +5,7 @@ let message            = require("../../config/messages").messages.messagesEngli
 async function getCars(req,res){	
 	
 	let promise = await cars_Collection.getCars();
-	if (promise._id){
+	if (promise[0]._id){
 		res.status(200).send({message:message["msgValidRequest"], info:promise});
 		res.end();
 	}else{
